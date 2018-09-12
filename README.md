@@ -1,1 +1,5 @@
-# otus-java-2018-08-EzhkovP
+Группа 2018-08
+
+Pavel Ezhkov (Павел Ежков)
+
+pachaejk@gmail.com
