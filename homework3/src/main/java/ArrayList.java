@@ -2,7 +2,7 @@ import java.util.*;
 
 public class ArrayList<E>  implements List<E>{
     private int size;
-    transient Object[] elementData;
+    private transient Object[] elementData;
     private static final int DEFAULT_CAPACITY = 16;
 
 
@@ -34,14 +34,14 @@ public class ArrayList<E>  implements List<E>{
     }
 
     private void increaseCapacity() {
-        Object[] increase = new Object[elementData.length+1];
+        Object[] increase = new Object[elementData.length+10];
         System.arraycopy(elementData,0,increase,0,elementData.length);
         elementData = increase;
     }
 
     @Override
     public void add(int index, E element) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -85,11 +85,11 @@ public class ArrayList<E>  implements List<E>{
 
     @Override
     public boolean remove(Object o) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
     @Override
     public E remove(int index) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -100,27 +100,27 @@ public class ArrayList<E>  implements List<E>{
         return true;
     }
 
-    @Override//done
+    @Override
     public boolean addAll(Collection<? extends E> c) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
-    @Override//done
+    @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
-    @Override//done
+    @Override
     public void clear() {
         for (int i = 0; i < size ; i++)
             elementData[i] = null;
@@ -133,7 +133,6 @@ public class ArrayList<E>  implements List<E>{
             throw new IndexOutOfBoundsException();
         }
         return (E) elementData[index];
-        //throw new RuntimeException();
     }
 
     @Override
@@ -148,18 +147,24 @@ public class ArrayList<E>  implements List<E>{
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new NewIterator();
+        return new NewIterator<>();
     }
 
-    private class  NewIterator implements Iterator<E> {
+    private class  NewIterator<E> implements ListIterator<E> {
         int cursor;
+        ArrayList<E> list;
 
         NewIterator(){}
+
+        NewIterator(ArrayList<E> list, int index){
+            this.list = list;
+            this.cursor = index;
+        }
 
         @Override
         public boolean hasNext() {
@@ -172,20 +177,45 @@ public class ArrayList<E>  implements List<E>{
                 throw new NoSuchElementException();
             return (E) elementData[cursor++];
         }
+
+        @Override
+        public boolean hasPrevious() {throw new UnsupportedOperationException();}
+
+        @Override
+        public E previous() {throw new UnsupportedOperationException();}
+
+        @Override
+        public int nextIndex() {throw new UnsupportedOperationException();}
+
+        @Override
+        public int previousIndex() {throw new UnsupportedOperationException();}
+
+        @Override
+        public void remove() {throw new UnsupportedOperationException();}
+
+        @Override
+        public void set(E e) {
+            list.set(cursor-1, e);
+        }
+
+        @Override
+        public void add(E e) {throw new UnsupportedOperationException();}
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        throw new RuntimeException();
+        return listIterator(0);
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        throw new RuntimeException();
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException();
+        return new NewIterator<E>(this, index);
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        throw new RuntimeException();
+        throw new UnsupportedOperationException();
     }
 }
