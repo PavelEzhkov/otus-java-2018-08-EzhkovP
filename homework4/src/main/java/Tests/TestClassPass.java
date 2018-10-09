@@ -10,7 +10,7 @@ import annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestClass {
+public class TestClassPass {
 List<Integer> list;
 
 @Before
@@ -27,12 +27,6 @@ public void testAdd()
     Integer sizeBefore = list.size();
     list.add(1);
     Assert.assertEquals(sizeBefore+1,list.size());
-}
-@Test
-public void failedTest()
-{
-    System.out.println("Fail test start");
-    Assert.assertEquals(true,false);
 }
 
 @After

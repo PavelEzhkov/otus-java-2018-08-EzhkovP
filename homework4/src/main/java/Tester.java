@@ -1,4 +1,5 @@
 import annotations.Before;
+import annotations.TestFailedException;
 import com.google.common.reflect.ClassPath;
 
 import java.io.IOException;
@@ -55,14 +56,17 @@ public class Tester {
                 try {
                     ReflectionHelper.callMethod(testObject, beforeMethod.getName());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
+                    throw new TestFailedException(e.getMessage());
                 }
             }
             for (Method testMethod : testMethods) {
                 try {
                     ReflectionHelper.callMethod(testObject, testMethod.getName());
-                    resultTest.put(testMethod, "Done");
+                    resultTest.put(testMethod, "Passed");
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    if (e.getCause().getClass() == TestFailedException.class){
+                        resultTest.put(testMethod, e.getCause().getMessage());
+                    } else
                     resultTest.put(testMethod, e.getMessage());
                     testFailed = true;
                 }
@@ -75,7 +79,7 @@ public class Tester {
                 try {
                     ReflectionHelper.callMethod(testObject, afterMethod.getName());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
+                    throw new TestFailedException(e.getMessage());
                 }
             }
 
@@ -86,8 +90,6 @@ public class Tester {
             System.out.println("Results:");
             resultTest.entrySet().forEach(System.out :: println);
         }
-
-
     }
 
 
