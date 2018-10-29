@@ -17,9 +17,10 @@ public class CacheEngine<K, V> implements CacheEngineInterface<K,V> {
     @Override
     public V get(K key) {
         SoftReference<V> reference = elements.get(key);
-        if (reference == null){
-            return null;
-        }
+        if (reference.get() != null){
+            if (reference == null)
+                return null;
+            }
         System.out.println("Value is: " + reference.get());
         return reference.get();
     }
