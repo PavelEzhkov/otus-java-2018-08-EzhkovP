@@ -1,7 +1,9 @@
 package ATM;
 
-public interface ATM {
+public interface ATMObserver {
     int getLimit();
+
+    void setDefault(int index);
 
     void getCash(int value);
 

@@ -5,13 +5,11 @@ import ATM.*;
 import java.util.*;
 
 public class ATMDepartment {
-    private Map<String, ATM> ATMs = new TreeMap<>();
-    private Caretaker caretaker = new Caretaker();
+    private Map<String, ATMObserver> ATMs = new TreeMap<>();
 
 
-    public void createNewATM(String name, ATM atm) {
+    public void createNewATM(String name, ATMObserver atm) {
         ATMs.put(name, atm);
-        caretaker.add(atm.save());
     }
 
     public void returnLimits() {
@@ -19,20 +17,19 @@ public class ATMDepartment {
             System.out.println("ATMs do not exist!");
             return;
         }
-        int limit = 0;
-        for (Map.Entry<String, ATM> map : ATMs.entrySet()) {
+        int limit=0;
+        for (Map.Entry<String, ATMObserver> map : ATMs.entrySet()) {
             limit += map.getValue().getLimit();
             System.out.println("ATM: " + map.getKey() + " limit: " + map.getValue().getLimit());
         }
+
         System.out.println("Total limit: " + limit);
 
     }
 
     public void setDefaultState() {
-        int i = 0;
-        for (Map.Entry<String, ATM> map : ATMs.entrySet()) {
-            // int i =0;
-            map.getValue().restore(caretaker.get(i++));
+         for (Map.Entry<String, ATMObserver> map : ATMs.entrySet()) {
+            map.getValue().setDefault(map.getKey().indexOf(map.getKey()));
         }
     }
 }

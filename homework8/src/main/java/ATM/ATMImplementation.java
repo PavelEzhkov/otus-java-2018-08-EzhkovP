@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-public class ATMImplementation implements ATM {
+public class ATMImplementation implements ATMObserver {
     private TreeMap<Integer, Integer> banknotesInATM = new TreeMap<>(Collections.<Integer>reverseOrder());
+    private Caretaker caretaker = new Caretaker();
 
     public ATMImplementation(int amount100, int amount500, int amount1000, int amount5000) {
         setDefaultBanknotesInATM(amount100, amount500, amount1000, amount5000);
+        caretaker.add(save());
     }
 
     private int calculateLimit() {
@@ -63,4 +65,9 @@ public class ATMImplementation implements ATM {
         this.banknotesInATM = atmMemento.getATMMemento();
     }
 
+
+    @Override
+    public void setDefault(int index) {
+        restore(caretaker.get(index));
+    }
 }

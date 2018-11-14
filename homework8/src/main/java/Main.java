@@ -6,9 +6,9 @@ public class Main {
         ATMDepartment atmDepartment0 = new ATMDepartment();
         atmDepartment0.returnLimits();
         System.out.println("----------------------------------------");
-        ATM atm1 = new ATMImplementation(100, 100, 100, 100);
-        ATM atm2 = new ATMImplementation(200, 200, 200, 200);
-        ATM atm3 = new ATMImplementation(300, 300, 300, 300);
+        ATMObserver atm1 = new ATMImplementation(100, 100, 100, 100);
+        ATMObserver atm2 = new ATMImplementation(200, 200, 200, 200);
+        ATMObserver atm3 = new ATMImplementation(300, 300, 300, 300);
         ATMDepartment atmDepartment = new ATMDepartment();
         atmDepartment.createNewATM("ATM1", atm1);
         atmDepartment.createNewATM("ATM2", atm2);
