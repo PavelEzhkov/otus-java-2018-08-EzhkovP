@@ -2,13 +2,15 @@ package DataBase;
 
 
 import DataSet.*;
+import Handler.*;
+
 import java.lang.reflect.Field;
 import java.sql.*;
 
 public class Executor {
     private static final String INSERT_USER = "insert into users (name, age) values (?,?)";
-    private static final String UPDATE_USER = "update users set name = ?, age = ? where id = ?";
-    private static final String SELECT_USER = "SELECT * FROM users WHERE id = ?";
+    private static final String UPDATE_USER = "update users set name = ?, age = ? where ID = ?";
+    private static final String SELECT_USER = "SELECT * FROM users WHERE ID = ?";
     private final Connection connection;
 
     public Executor(Connection connection) {
@@ -18,35 +20,30 @@ public class Executor {
 
     public <T extends DataSet> void save(T user) throws SQLException {
         if (user.getId() <= 0) {
-            create(user);
+            create(INSERT_USER, user, "name", "age");
         } else {
-            update(user);
+            update(UPDATE_USER, user, "name", "age", "id");
         }
     }
+
 
     public <T extends DataSet> T load(long id, Class<T> clazz) throws SQLException {
-        T type = null;
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_USER)) {
-            statement.setLong(1, id);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                final String name = set.getString(2);
-                final int age = set.getInt(3);
+        ResultSetHandler<T> handler = new Handler<T>(clazz);
+        return query(SELECT_USER, handler, id);
+    }
 
-                type = clazz.getConstructor(long.class, String.class, int.class)
-                        .newInstance(id, name, age);
-            }
-        } catch (Exception e) {
-            new SQLException(e);
+    private <T extends DataSet> T query(String sql, ResultSetHandler<T> handler, Object... params) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            prepare(statement, params);
+            ResultSet resultSet = statement.executeQuery();
+            return handler.handle(resultSet);
         }
-        return type;
     }
 
 
-    private <T extends DataSet> void create(T user) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, (String) getParams(user, "name"));
-            statement.setInt(2, (Integer) getParams(user, "age"));
+    private <T extends DataSet> void create(String sql, T user, String... names) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            prepare(statement, getParams(user, names));
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -55,29 +52,39 @@ public class Executor {
                     throw new SQLException("User ID not generated");
                 }
             }
-            System.out.println("User " + getParams(user, "name") + " saved!");
         }
     }
 
-    private <T extends DataSet> void update(T user) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
-            statement.setString(1, (String) getParams(user, "name"));
-            statement.setInt(2, (Integer) getParams(user, "age"));
-            statement.setLong(3, (Long) getParams(user, "id"));
+    private <T extends DataSet> void update(String sql, T user, String... names) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            prepare(statement, getParams(user, names));
             statement.executeUpdate();
-            System.out.println("User " + getParams(user, "name") + " overwrite!");
         }
     }
 
-    private Object getParams(Object object, String name) throws SQLException {
-        Object parameter;
+
+    private Object[] getParams(Object object, String[] names) throws SQLException {
+        Object[] parameters = new Object[names.length];
         try {
-            Field field = ObjHelper.getField(object, name);
-            field.setAccessible(true);
-            parameter = field.get(object);
+            for (int i = 0; i < names.length; i++) {
+                Field field = ObjHelper.getField(object, names[i]);
+                field.setAccessible(true);
+                parameters[i] = field.get(object);
+            }
         } catch (Exception e) {
-            throw new SQLException();
+            throw new SQLException(e);
         }
-        return parameter;
+        return parameters;
+    }
+
+    private void prepare(PreparedStatement statement, Object... params) throws SQLException {
+        ParameterMetaData metadata = statement.getParameterMetaData();
+        int count = metadata.getParameterCount();
+        if (count != params.length) {
+            throw new SQLException("Wrong number of parameters");
+        }
+        for (int i = 0; i < count; i++) {
+            statement.setObject(i + 1, params[i]);
+        }
     }
 }
