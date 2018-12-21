@@ -1,4 +1,4 @@
-package DataSet;
+package dataSet;
 
 public class UserDataSet extends DataSet {
     private String name;

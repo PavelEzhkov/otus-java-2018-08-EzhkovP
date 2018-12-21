@@ -1,4 +1,4 @@
-package DataSet;
+package dataSet;
 
 public abstract class DataSet {
     private long id;

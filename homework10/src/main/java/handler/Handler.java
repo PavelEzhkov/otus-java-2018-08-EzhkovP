@@ -1,8 +1,8 @@
-package Handler;
+package handler;
 
 
 
-import DataSet.*;
+import helper.ReflectionHelper;
 
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
@@ -37,7 +37,7 @@ public class Handler<T> implements ResultSetHandler<T> {
         ResultSetMetaData metaData = rs.getMetaData();
         try {
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                Field field = ObjHelper.getField(instance, metaData.getColumnName(i).toLowerCase());
+                Field field = ReflectionHelper.getField(instance, metaData.getColumnName(i).toLowerCase());
                 field.setAccessible(true);
                 field.set(instance, rs.getObject(i));
             }

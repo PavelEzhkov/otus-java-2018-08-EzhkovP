@@ -1,14 +1,15 @@
-package DataBase;
+package dataBase;
 
 
-import DataSet.UserDataSet;
+import dataSet.UserDataSet;
+import helper.H2ConnectionHelper;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBService implements AutoCloseable {
-    private static final String CREATE_TABLE = "create table if not exists users (ID bigint(20) NOT NULL auto_increment, name varchar(256), age int(3))";
+    private static final String CREATE_TABLE = "create table if not exists UserDataSet (ID bigint(20) NOT NULL auto_increment, name varchar(256), age int(3))";
     private final Connection connection;
     private Executor executor;
 

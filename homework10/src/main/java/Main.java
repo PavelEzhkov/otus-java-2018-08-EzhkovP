@@ -1,10 +1,13 @@
-import DataBase.DBService;
-import DataSet.UserDataSet;
+import dataBase.DBService;
+import dataSet.UserDataSet;
+import org.h2.tools.Server;
+
+import java.sql.SQLException;
 
 
 public class Main {
-    public static void main(String[] args) {
-        //Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
+    public static void main(String[] args) throws SQLException {
+        Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
         try (DBService dbService = new DBService()) {
             dbService.prepareTables();
             UserDataSet user1 = new UserDataSet("Name1", 18);
@@ -16,7 +19,7 @@ public class Main {
             user1.setName("newName");
             System.out.println(user1);
             dbService.save(user1);
-            UserDataSet newUser = dbService.load(user2.getId(), UserDataSet.class);
+            UserDataSet newUser = dbService.load(user1.getId(), UserDataSet.class);
             System.out.println("loaded user:" + newUser);
         } catch (Exception e) {
             e.printStackTrace();
