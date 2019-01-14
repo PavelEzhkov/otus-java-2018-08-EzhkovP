@@ -19,7 +19,7 @@ public class Main {
     }
 
     private static void newMain() {
-        try (DBServiceHibernateImpl dbService = new DBServiceHibernateImpl()){
+        try (DBService dbService = new DBServiceHibernateImpl()){
             dbService.save(new UserDataSet("User1",18, new ArrayList<>(Arrays.asList(new PhoneDataSet("111"),new PhoneDataSet("333"))), new AddressDataSet("Street1")));
             dbService.save(new UserDataSet("User2",20,  new ArrayList<>(Arrays.asList(new PhoneDataSet("222"),new PhoneDataSet("444"))), new AddressDataSet("Street2")));
 

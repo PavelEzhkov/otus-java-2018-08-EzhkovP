@@ -17,7 +17,7 @@ public class AddressDataDAO {
     public List<AddressDataSet> readAll() {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<AddressDataSet> criteria = builder.createQuery(AddressDataSet.class);
-        criteria.from(PhoneDataSet.class);
+        criteria.from(AddressDataSet.class);
         return session.createQuery(criteria).list();
     }
 }
