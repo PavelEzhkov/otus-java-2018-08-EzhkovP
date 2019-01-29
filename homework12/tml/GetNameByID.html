@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>GetNameByID</title>
+</head>
+<body>
+<div class="top">
+    <br/>
+    <a href="AddUser">Add user</a>
+    <a href="GetNameByID">Get name by id</a>
+    <a href="GetNumberOfUsers">Get number of users</a>
+</div>
+<br/>
+<div class="GetNameByID">
+    <form action="/GetNameByID" method="GET">
+        input ID: <input type="text" name="id"/><br/>
+        <input type="submit" name="get_name" value="submit">
+        <br/>
+        <#if name??>
+            User: ${name}
+        </#if>
+        <#if isSearchError??>
+            ${isSearchError}
+        </#if>
+    </form>
+</div>
+</body>
+</html>
