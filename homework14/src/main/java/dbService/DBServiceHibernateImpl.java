@@ -16,11 +16,13 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.function.Function;
 
+@Component
 public class DBServiceHibernateImpl implements DBService {
 
     private final SessionFactory sessionFactory;

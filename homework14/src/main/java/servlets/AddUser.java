@@ -3,6 +3,8 @@ package servlets;
 import dataSet.UserDataSet;
 import dbService.DBService;
 import dbService.DBServiceHibernateImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,20 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+@Configurable
 public class AddUser extends HttpServlet {
 
     private static final String ADDUSER_PAGE_TEMPLATE = "AddUser.html";
 
-    private final TemplateProcessor templateProcessor;
+    @Autowired
+    private TemplateProcessor templateProcessor;
+    @Autowired
     private DBService dbService;
 
-    @SuppressWarnings("WeakerAccess")
-    public AddUser() throws IOException {
-        templateProcessor = new TemplateProcessor();
-    }
-    public void init(){
+    public void init() {
         ApplicationContext context = new ClassPathXmlApplicationContext("SpringBeans.xml");
         dbService = context.getBean("dbService", DBService.class);
+        templateProcessor = context.getBean("templateProcessor", TemplateProcessor.class);
     }
 
 
