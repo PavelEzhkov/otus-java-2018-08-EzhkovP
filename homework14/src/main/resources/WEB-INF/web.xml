@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app>
+
+    <display-name>homework14</display-name>
+    <description>Example of war file</description>
+
+     <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>servlets.AddUser</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/AddUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetNameByID</servlet-name>
+        <servlet-class>servlets.GetNameByID</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetNameByID</servlet-name>
+        <url-pattern>/GetNameByID</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetNumberOfUsers</servlet-name>
+        <servlet-class>servlets.GetNumberOfUsers</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetNumberOfUsers</servlet-name>
+        <url-pattern>/GetNumberOfUsers</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
+
