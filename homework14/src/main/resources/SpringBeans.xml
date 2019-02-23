@@ -7,19 +7,21 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
+    <context:component-scan base-package="ru.otus.hw14"></context:component-scan>
     <context:annotation-config/>
+    <context:spring-configured/>
 
-    <bean id="cacheEngine" class="cache.CacheEngineImpl">
+    <bean id="cacheEngine" class="ru.otus.hw14.cache.CacheEngineImpl">
         <constructor-arg name="maxElements" value="1000"/>
         <constructor-arg name="lifeTimeMs" value="0"/>
         <constructor-arg name="idleTimeMs" value="0"/>
         <constructor-arg name="isEternal" value="true"/>
     </bean>
 
-    <bean id="dbService" class="dbService.DBServiceHibernateImpl">
-        <constructor-arg name="cache" ref="cacheEngine"/>
+    <bean id="dbService" class="ru.otus.hw14.dbService.DBServiceHibernateImpl">
+        <constructor-arg name="ru.otus.hw14.cache" ref="cacheEngine"/>
     </bean>
 
-    <bean id="templateProcessor" class="servlets.TemplateProcessor"/>
+    <bean id="templateProcessor" class="ru.otus.hw14.servlets.TemplateProcessor"/>
 
 </beans>

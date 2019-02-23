@@ -1,13 +1,3 @@
-import dbService.DBService;
-import dbService.DBServiceHibernateImpl;
-
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.*;
-
 /*
 public class Main {
     private final static int PORT = 8095;
@@ -20,12 +10,12 @@ public class Main {
 
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         TemplateProcessor templateProcessor = new TemplateProcessor();
-        DBService dbService = new DBServiceHibernateImpl();
+        DBService ru.otus.hw14.dbService = new DBServiceHibernateImpl();
 
 
-        contextHandler.addServlet(new ServletHolder(new AddUser(templateProcessor, dbService)), "/AddUser");
-        contextHandler.addServlet(new ServletHolder(new GetNameByID(templateProcessor, dbService)), "/GetNameByID");
-        contextHandler.addServlet(new ServletHolder(new GetNumberOfUsers(templateProcessor, dbService)), "/GetNumberOfUsers");
+        contextHandler.addServlet(new ServletHolder(new AddUser(templateProcessor, ru.otus.hw14.dbService)), "/AddUser");
+        contextHandler.addServlet(new ServletHolder(new GetNameByID(templateProcessor, ru.otus.hw14.dbService)), "/GetNameByID");
+        contextHandler.addServlet(new ServletHolder(new GetNumberOfUsers(templateProcessor, ru.otus.hw14.dbService)), "/GetNumberOfUsers");
 
         Server server = new Server(PORT);
         server.setHandler(new HandlerList(resourceHandler, contextHandler));

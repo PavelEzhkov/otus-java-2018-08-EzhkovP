@@ -51,8 +51,8 @@ General error: "java.lang.IllegalStateException: The file is locked: nio:D:/Git/
 	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:418)
 	at org.hibernate.boot.internal.MetadataBuilderImpl.build(MetadataBuilderImpl.java:87)
 	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:691)
-	at dbService.DBServiceHibernateImpl.createSessionFactory(DBServiceHibernateImpl.java:39)
-	at dbService.DBServiceHibernateImpl.<init>(DBServiceHibernateImpl.java:28)
+	at ru.otus.hw14.dbServicew14.DBServiceHibernateImpl.createSessionFactory(DBServiceHibernateImpl.java:39)
+	at ru.otus.hw14.dbServicew14.DBServiceHibernateImpl.<init>(DBServiceHibernateImpl.java:28)
 	at Main.main(Main.java:35)
 Caused by: org.h2.jdbc.JdbcSQLException: Внутренняя ошибка: "java.lang.IllegalStateException: The file is locked: nio:D:/Git/otus-java-2018-08-EzhkovP/homework12/h2db/test.mv.db [1.4.197/7]"
 General error: "java.lang.IllegalStateException: The file is locked: nio:D:/Git/otus-java-2018-08-EzhkovP/homework12/h2db/test.mv.db [1.4.197/7]" [50000-197]

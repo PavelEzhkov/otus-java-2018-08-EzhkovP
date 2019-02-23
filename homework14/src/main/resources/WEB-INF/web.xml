@@ -5,9 +5,20 @@
     <display-name>homework14</display-name>
     <description>Example of war file</description>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:SpringBeans.xml
+        </param-value>
+    </context-param>
+
      <servlet>
         <servlet-name>AddUser</servlet-name>
-        <servlet-class>servlets.AddUser</servlet-class>
+        <servlet-class>ru.otus.hw14.servlets.AddUser</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -17,7 +28,7 @@
 
     <servlet>
         <servlet-name>GetNameByID</servlet-name>
-        <servlet-class>servlets.GetNameByID</servlet-class>
+        <servlet-class>ru.otus.hw14.servlets.GetNameByID</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -27,7 +38,7 @@
 
     <servlet>
         <servlet-name>GetNumberOfUsers</servlet-name>
-        <servlet-class>servlets.GetNumberOfUsers</servlet-class>
+        <servlet-class>ru.otus.hw14.servlets.GetNumberOfUsers</servlet-class>
     </servlet>
 
     <servlet-mapping>
